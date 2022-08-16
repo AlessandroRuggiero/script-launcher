@@ -1,5 +1,5 @@
 # Script Launcher
-This is an Obsydian plugin that allows you to easily run script written in any language directly from the app
+This is an Obsidian plugin that allows you to easily run script written in any language directly from the app
 
 ## How to use it
 ### Adding a new script 
@@ -14,10 +14,14 @@ You will have to fill in some information about the script you want to add:
 Click the `Delete` button on the script's settings you want to delete 
 
 ### Launching a script 
-Click the scipt icon on the bottom bar of the obsydian app.
+
+Click the scipt icon on the bottom bar of the Obsidian app.
 If the script does not show up as an icon go in the settings and select `Show on bottom bar`
 
-The output of the script will be shown as notices in the Obsydian app
+You can also run the script using the `Run script` Obsidian command, you will be prompted with a list of scripts with a searchbar, selecting a script will run it.
+
+
+The output of the script will be shown as notices in the Obsidian app
 
 ## Examples 
 
@@ -28,7 +32,7 @@ This script for example syncs on demand files from all you vaults at the click o
 ```
 ![](https://github.com/AlessandroRuggiero/script-launcher/blob/master/docs/images/launching-scipt-example.gif)
 ## Advanced settings
-The scripts informations are saved in the `data.json` file under the `.obsydian/plugins` folder
+The scripts informations are saved in the `data.json` file under the `.Obsidian/plugins` folder
 This is how it looks normally:
 ```json
 [
@@ -45,8 +49,8 @@ But you can manually add some options that are not shown in the user interface i
     ```json
     "showExitCode": true
     ```
-    The exit code will be shown as a Obsydian notice:
-    
+    The exit code will be shown as a Obsidian notice:
+
     ![exit code notice](https://github.com/AlessandroRuggiero/script-launcher/blob/master/docs/images/exit-code-notice.png)
 ## TODO
 - Pass paths and other informations as parameters to scripts

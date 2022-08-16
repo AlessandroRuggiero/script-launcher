@@ -1,4 +1,4 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { App, Editor, MarkdownView, Notice, Plugin, PluginSettingTab, Setting, SuggestModal } from 'obsidian';
 const { spawn } = require("child_process");
 
 interface Script {
@@ -16,7 +16,16 @@ export default class MyPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 		this.createIcons();
-		this.addSettingTab(new SampleSettingTab(this.app, this));
+		this.addSettingTab(new ScriptLauncherSettingTab(this.app, this));
+
+		//adding the command to run any script at any time
+		this.addCommand({
+			id: 'script-launcher-run-script',
+			name: 'Run script',
+			editorCallback: (editor: Editor, view: MarkdownView) => {
+				console.log(editor.getSelection());
+				new ScriptSelectionModal (this).open()
+		}});
 	}
 
 	onunload() {
@@ -72,7 +81,7 @@ export default class MyPlugin extends Plugin {
 	}
 }
 
-class SampleSettingTab extends PluginSettingTab {
+class ScriptLauncherSettingTab extends PluginSettingTab {
 	plugin: MyPlugin;
 
 	constructor(app: App, plugin: MyPlugin) {
@@ -166,4 +175,30 @@ class SampleSettingTab extends PluginSettingTab {
 			)
 		
 	}
+}
+
+class ScriptSelectionModal extends SuggestModal<Script> {
+	plugin: MyPlugin;
+
+	constructor(plugin: MyPlugin) {
+		super(plugin.app);
+		this.plugin = plugin;
+	}
+	// Returns all available suggestions.
+	getSuggestions(query: string): Script[] {
+		return this.plugin.scripts.filter((script:Script) =>
+		script.name.toLowerCase().includes(query.toLowerCase())
+		);
+	  }
+	
+	  // Renders each suggestion item.
+	  renderSuggestion(script: Script, el: HTMLElement) {
+		el.createEl("div", { text: script.name });
+		//el.createEl("small", { text: book.author });
+	  }
+	
+	  // Perform action on the selected suggestion.
+	  onChooseSuggestion(script: Script, evt: MouseEvent | KeyboardEvent) {
+		this.plugin.runScript(script);
+	  }
 }

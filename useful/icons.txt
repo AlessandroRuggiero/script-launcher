@@ -1,4 +1,4 @@
-Lista di icone disponibili in Obsydian:
+Lista di icone disponibili in Obsidian:
 - "any-key"
 - "audio-file"
 - "blocks"
