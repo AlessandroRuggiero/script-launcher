@@ -46,6 +46,7 @@ But you can manually add some options that are not shown in the user interface i
     "showExitCode": true
     ```
     The exit code will be shown as a Obsydian notice:
+    
     ![exit code notice](https://github.com/AlessandroRuggiero/script-launcher/blob/master/docs/images/exit-code-notice.png)
 ## TODO
 - Pass paths and other informations as parameters to scripts
