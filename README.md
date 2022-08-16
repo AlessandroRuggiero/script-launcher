@@ -14,3 +14,11 @@ Click the `Delete` button on the script's settings you want to delete
 ### Launching a script 
 Click the scipt icon on the bottom bar of the obsydian app.
 If the script does not show up as an icon go in the settings and select `Show on bottom bar`
+## Examples 
+### Google Drive backup 
+This script for example syncs on demand files from all you vaults at the click of a button
+```
+ //Todo insert here script
+```
+
+## Advanced settings
