@@ -26,7 +26,7 @@ This script for example syncs on demand files from all you vaults at the click o
 ```
  (cd $path_to_vaults && grive -s $vaults_folder)
 ```
-![](https://github.com/AlessandroRuggiero/script-launcher/docs/images/launching-scipt-example.gif)
+![](https://github.com/AlessandroRuggiero/script-launcher/blob/master/docs/images/launching-scipt-example.gif)
 ## Advanced settings
 The scripts informations are saved in the `data.json` file under the `.obsydian/plugins` folder
 This is how it looks normally:
@@ -46,6 +46,6 @@ But you can manually add some options that are not shown in the user interface i
     "showExitCode": true
     ```
     The exit code will be shown as a Obsydian notice:
-    ![exit code notice](https://github.com/AlessandroRuggiero/script-launcher/docs/images/exit-code-notice.png)
+    ![exit code notice](s://github.com/AlessandroRuggiero/script-launcher/blob/master/docs/images/exit-code-notice.png)
 ## TODO
 - Pass paths and other informations as parameters to scripts
