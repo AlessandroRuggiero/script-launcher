@@ -23,14 +23,14 @@ The output of the script will be shown as notices in the Obsydian app
 
 ### Google Drive backup 
 This script for example syncs on demand files from all you vaults at the click of a button
-```
+```sh
  (cd $path_to_vaults && grive -s $vaults_folder)
 ```
 ![](https://github.com/AlessandroRuggiero/script-launcher/blob/master/docs/images/launching-scipt-example.gif)
 ## Advanced settings
 The scripts informations are saved in the `data.json` file under the `.obsydian/plugins` folder
 This is how it looks normally:
-``` 
+```json
 [
     {
         "name": "Example",
@@ -42,7 +42,7 @@ This is how it looks normally:
 ```
 But you can manually add some options that are not shown in the user interface if needed:
 1. Showing exit code → add this filed to the json
-    ```
+    ```json
     "showExitCode": true
     ```
     The exit code will be shown as a Obsydian notice:
