@@ -23,7 +23,7 @@ The output of the script will be shown as notices in the Obsydian app
 
 ### Google Drive backup 
 This script for example syncs on demand files from all you vaults at the click of a button
-```sh
+```bash
  (cd $path_to_vaults && grive -s $vaults_folder)
 ```
 ![](https://github.com/AlessandroRuggiero/script-launcher/blob/master/docs/images/launching-scipt-example.gif)
@@ -46,6 +46,6 @@ But you can manually add some options that are not shown in the user interface i
     "showExitCode": true
     ```
     The exit code will be shown as a Obsydian notice:
-    ![exit code notice](s://github.com/AlessandroRuggiero/script-launcher/blob/master/docs/images/exit-code-notice.png)
+    ![exit code notice](https://github.com/AlessandroRuggiero/script-launcher/blob/master/docs/images/exit-code-notice.png)
 ## TODO
 - Pass paths and other informations as parameters to scripts
