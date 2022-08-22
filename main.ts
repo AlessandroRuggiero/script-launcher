@@ -1,4 +1,4 @@
-import { App, Editor, MarkdownView, Notice, Plugin, PluginSettingTab, Setting, SuggestModal } from 'obsidian';
+import { App, Editor, FileSystemAdapter, MarkdownView, Notice, Plugin, PluginSettingTab, Setting, SuggestModal } from 'obsidian';
 const { spawn } = require("child_process");
 
 interface Script {
@@ -60,7 +60,7 @@ export default class MyPlugin extends Plugin {
 
 
 	runScript(script:Script) {
-		const process = spawn(script.path,[]);
+		const process = spawn(script.path,[this.getVaultPath()]);
 		process.stdout.on("data", (data:any) => {
 			console.log(`stdout: ${data}`);
 			new Notice(data);
@@ -78,6 +78,14 @@ export default class MyPlugin extends Plugin {
 		process.on("close", (code:any) => {
 			new Notice(`child process exited with code ${code}`);
 		});
+	}
+
+	getVaultPath () {
+		let adapter = app.vault.adapter;
+		if (adapter instanceof FileSystemAdapter) {
+			return adapter.getBasePath();
+		}
+		return null;
 	}
 }
 
