@@ -1,6 +1,11 @@
 # Script Launcher
 This is an Obsidian plugin that allows you to easily run script written in any language directly from the app
+## How to install it
+Go to the most recent tag and download the script-launcher zip, unzip it and extract the script-launcher folder (it should contain 3 files: main.js manifest.json and styles.css)
 
+Move this folder into `path_to_your_vault/.obsidian/plugins/` (if the plugins folder is not already there create it)
+
+Remember to enable [Commpunity Plugins](https://help.obsidian.md/Advanced+topics/Community+plugins#:~:text=In%20order%20to%20install%20community,Community%20plugin%20%2D%3E%20Safe%20Mode.) in the Obsidian settings
 ## How to use it
 ### Adding a new script 
 Go in the pligin settings and click the `+` icon
@@ -30,7 +35,14 @@ This script for example syncs on demand files from all you vaults at the click o
 ```bash
  (cd $path_to_vaults && grive -s $vaults_folder)
 ```
-![](https://github.com/AlessandroRuggiero/script-launcher/blob/master/docs/images/launching-scipt-example.gif)
+![Gif showing how the example plugin works](https://github.com/AlessandroRuggiero/script-launcher/blob/master/docs/images/launching-scipt-example.gif)
+
+if you want to write a script to backup only the files in your vault you can use the `$1` argument:
+The plugin passes the path to your vault as the first parameter to the script
+```bash
+ (cd $path_to_script && grive -s $1)
+```
+
 ## Advanced settings
 The scripts informations are saved in the `data.json` file under the `.Obsidian/plugins` folder
 This is how it looks normally:
