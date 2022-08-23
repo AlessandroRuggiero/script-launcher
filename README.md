@@ -45,6 +45,7 @@ The plugin passes the path to your vault as the first parameter to the script
 
 ## Advanced settings
 The scripts informations are saved in the `data.json` file under the `.obsidian/plugins` folder
+
 This is how it looks normally:
 ```json
 [
