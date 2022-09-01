@@ -1,5 +1,6 @@
 import { App, Editor, FileSystemAdapter, MarkdownView, Notice, Plugin, PluginSettingTab, Setting, SuggestModal } from 'obsidian';
 const { spawn } = require("child_process");
+const fs = require('fs');
 
 interface Script {
 	path:string;
@@ -9,9 +10,11 @@ interface Script {
 	showExitCode?:boolean;
 }
 
+
 export default class MyPlugin extends Plugin {
 	scripts:Array<Script> = [];
 	barElements:Array<HTMLElement> = [];
+	verifyed_scripts: Set<string> = new Set<string>();  // scrips we already know esist (is a cache so we do not have to hit the os every sigle change)
 
 	async onload() {
 		await this.loadSettings();
@@ -32,12 +35,23 @@ export default class MyPlugin extends Plugin {
 
 	}
 
+	exists (path:string): boolean {
+		try {
+			return fs.lstatSync(path).isFile();
+		} catch (e){
+			return false;
+		}
+	}
+
 	createIcons () {
 		for (const el of this.barElements) {
 			el.remove();
 		}
 		for (const script of this.scripts){
 			if (!script.showOnBottomBar) continue;
+			// check if the path esists
+			if (!(this.verifyed_scripts.has(script.path)) && !this.exists(script.path)) continue;
+			this.verifyed_scripts.add(script.path);
 			const statusBarItemEl = this.addStatusBarItem();
 			statusBarItemEl.setText(script.icon ?? script.name);
 			statusBarItemEl.onClickEvent((_) => {
