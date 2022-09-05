@@ -11,10 +11,10 @@ interface Script {
 }
 
 
-export default class MyPlugin extends Plugin {
+export default class ScriptLauncher extends Plugin {
 	scripts:Array<Script> = [];
 	barElements:Array<HTMLElement> = [];
-	verifyed_scripts: Set<string> = new Set<string>();  // scrips we already know esist (is a cache so we do not have to hit the os every sigle change)
+	verifyidScripts: Set<string> = new Set<string>();  // scrips we already know exist (is a cache so we do not have to hit the os every sigle change)
 
 	async onload() {
 		await this.loadSettings();
@@ -23,10 +23,10 @@ export default class MyPlugin extends Plugin {
 
 		//adding the command to run any script at any time
 		this.addCommand({
-			id: 'script-launcher-run-script',
+			id: 'run-script',
 			name: 'Run script',
 			editorCallback: (editor: Editor, view: MarkdownView) => {
-				console.log(editor.getSelection());
+				//console.log(editor.getSelection());
 				new ScriptSelectionModal (this).open()
 		}});
 	}
@@ -50,8 +50,8 @@ export default class MyPlugin extends Plugin {
 		for (const script of this.scripts){
 			if (!script.showOnBottomBar) continue;
 			// check if the path esists
-			if (!(this.verifyed_scripts.has(script.path)) && !this.exists(script.path)) continue;
-			this.verifyed_scripts.add(script.path);
+			if (!(this.verifyidScripts.has(script.path)) && !this.exists(script.path)) continue;
+			this.verifyidScripts.add(script.path);
 			const statusBarItemEl = this.addStatusBarItem();
 			statusBarItemEl.setText(script.icon ?? script.name);
 			statusBarItemEl.onClickEvent((_) => {
@@ -104,9 +104,9 @@ export default class MyPlugin extends Plugin {
 }
 
 class ScriptLauncherSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+	plugin: ScriptLauncher;
 
-	constructor(app: App, plugin: MyPlugin) {
+	constructor(app: App, plugin: ScriptLauncher) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
@@ -200,9 +200,9 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 }
 
 class ScriptSelectionModal extends SuggestModal<Script> {
-	plugin: MyPlugin;
+	plugin: ScriptLauncher;
 
-	constructor(plugin: MyPlugin) {
+	constructor(plugin: ScriptLauncher) {
 		super(plugin.app);
 		this.plugin = plugin;
 	}

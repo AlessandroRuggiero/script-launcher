@@ -8,7 +8,7 @@ Move this folder into `path_to_your_vault/.obsidian/plugins/` (if the plugins fo
 Remember to enable [Commpunity Plugins](https://help.obsidian.md/Advanced+topics/Community+plugins#:~:text=In%20order%20to%20install%20community,Community%20plugin%20%2D%3E%20Safe%20Mode.) in the Obsidian settings
 ## How to use it
 ### Adding a new script 
-Go in the pligin settings and click the `+` icon
+Go in the plugin settings and click the `+` icon
 You will have to fill in some information about the script you want to add:
 1. `Script name` → the name of the script you want to add (has no influnence on the script itself)
 2. `Script path` → absolute path to the script you want to launch (it can be anything: binary, executable, python script,shell script, bash script ecc...)
