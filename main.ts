@@ -74,7 +74,7 @@ export default class ScriptLauncher extends Plugin {
 
 
 	runScript(script:Script) {
-		const process = spawn(script.path,[this.getVaultPath()]);
+		const process = spawn(script.path,[this.getVaultPath(),this.getFilePath()]);
 		process.stdout.on("data", (data:any) => {
 			console.log(`stdout: ${data}`);
 			new Notice(data);
@@ -100,6 +100,12 @@ export default class ScriptLauncher extends Plugin {
 			return adapter.getBasePath();
 		}
 		return null;
+	}
+	
+	getFilePath() {
+		if(app.workspace.getActiveFile() == null)
+			return "";
+		return app.workspace.getActiveFile().path;
 	}
 }
 
