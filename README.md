@@ -42,6 +42,7 @@ The plugin passes the path to your vault as the first parameter to the script
 ```bash
  (cd $path_to_script && grive -s $1)
 ```
+The second parameter passed to the bot (`$2`) is the path to the currently open file, if there is no open file an empty string will be returned (`""`)
 
 ## Advanced settings
 The scripts informations are saved in the `data.json` file under the `.obsidian/plugins` folder
