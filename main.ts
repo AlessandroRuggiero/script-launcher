@@ -105,7 +105,7 @@ export default class ScriptLauncher extends Plugin {
 	getFilePath() {
 		if(app.workspace.getActiveFile() == null)
 			return "";
-		return app.workspace.getActiveFile().path;
+		return app.workspace.getActiveFile()?.path;
 	}
 }
 
