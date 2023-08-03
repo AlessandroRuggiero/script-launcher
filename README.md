@@ -5,7 +5,7 @@ Go to the most recent tag and download the script-launcher zip, unzip it and ext
 
 Move this folder into `path_to_your_vault/.obsidian/plugins/` (if the plugins folder is not already there create it)
 
-Remember to enable [Commpunity Plugins](https://help.obsidian.md/Advanced+topics/Community+plugins#:~:text=In%20order%20to%20install%20community,Community%20plugin%20%2D%3E%20Safe%20Mode.) in the Obsidian settings
+Remember to enable [Commpunity Plugins](https://help.obsidian.md/Extending+Obsidian/Community+plugins) in the Obsidian settings
 ## How to use it
 ### Adding a new script 
 Go in the plugin settings and click the `+` icon
