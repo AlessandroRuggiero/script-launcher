@@ -74,7 +74,7 @@ export default class ScriptLauncher extends Plugin {
 
 
 	runScript(script:Script) {
-		const process = spawn(script.path,[this.getVaultPath(),this.getFilePath()]);
+		const process = spawn(script.path, [this.getVaultPath(), this.getFilePath()], { shell: true });
 		process.stdout.on("data", (data:any) => {
 			console.log(`stdout: ${data}`);
 			new Notice(data);
