@@ -26,7 +26,6 @@ export default class ScriptLauncher extends Plugin {
 			id: 'run-script',
 			name: 'Run script',
 			editorCallback: (editor: Editor, view: MarkdownView) => {
-				//console.log(editor.getSelection());
 				new ScriptSelectionModal (this).open()
 		}});
 	}
@@ -162,7 +161,6 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 				.onChange(async (v) => {
 					script.showOnBottomBar = v;
 					await this.onSettingsChange()
-					//this.createSettings();
 				})
 			})
 
@@ -222,7 +220,6 @@ class ScriptSelectionModal extends SuggestModal<Script> {
 	  // Renders each suggestion item.
 	  renderSuggestion(script: Script, el: HTMLElement) {
 		el.createEl("div", { text: script.name });
-		//el.createEl("small", { text: book.author });
 	  }
 	
 	  // Perform action on the selected suggestion.
