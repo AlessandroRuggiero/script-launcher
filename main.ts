@@ -129,7 +129,7 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 		const {containerEl} = this;
 
 		containerEl.empty();
-		containerEl.createEl('h2', {text: 'Settings for my awesome plugin.'});
+		containerEl.createEl('h2', {text: 'Script Launcher Settings'});
 		for (let i = 0; i < this.plugin.scripts.length; i++) {
 			let script = this.plugin.scripts[i];
 
