@@ -101,7 +101,7 @@ export default class ScriptLauncher extends Plugin {
 	}
 
 	getVaultPath () {
-		let adapter = app.vault.adapter;
+		const adapter = app.vault.adapter;
 		if (adapter instanceof FileSystemAdapter) {
 			return adapter.getBasePath();
 		}
@@ -138,7 +138,7 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 		containerEl.empty();
 		containerEl.createEl('h2', {text: 'Script Launcher Settings'});
 		for (let i = 0; i < this.plugin.scripts.length; i++) {
-			let script = this.plugin.scripts[i];
+			const script = this.plugin.scripts[i];
 
 			new Setting(containerEl)
 			.setName("========= Script " + i + " =========");
@@ -160,7 +160,21 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 				.onChange(async (value) => {
 					script.path = value;
 					await this.onSettingsChange()
-				}));
+				}))
+			.addButton(button => {
+				button.setButtonText("Browse")
+				.onClick(async () => {
+					const filePath = await this.openFilePicker();
+					if (filePath) {
+						new Notice("File selected: " + filePath);
+						script.path = filePath;
+						await this.onSettingsChange();
+						this.createSettings();
+					} else{
+						new Notice("No file selected");
+					}
+				});
+			});
 			new Setting(containerEl)
 			.setName("Show on bottom bar")
 			.addToggle((toggle) => {
@@ -228,6 +242,21 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 			)
 		
 	}
+	async openFilePicker(): Promise<string | null> {
+		return new Promise((resolve) => {
+			const input = document.createElement('input');
+			input.type = 'file';
+			input.onchange = (event: Event) => {
+				const target = event.target as HTMLInputElement;
+				if (target.files && target.files.length > 0) {
+					resolve(target.files[0].name);
+				} else {
+					resolve(null);
+				}
+			};
+			input.click();
+		});
+	}
 }
 
 class ScriptSelectionModal extends SuggestModal<Script> {
@@ -253,4 +282,7 @@ class ScriptSelectionModal extends SuggestModal<Script> {
 	  onChooseSuggestion(script: Script, evt: MouseEvent | KeyboardEvent) {
 		this.plugin.runScript(script);
 	  }
+	
+	
+	
 }
