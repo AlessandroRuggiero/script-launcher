@@ -161,20 +161,6 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 					script.path = value;
 					await this.onSettingsChange()
 				}))
-			.addButton(button => {
-				button.setButtonText("Browse")
-				.onClick(async () => {
-					const filePath = await this.openFilePicker();
-					if (filePath) {
-						new Notice("File selected: " + filePath);
-						script.path = filePath;
-						await this.onSettingsChange();
-						this.createSettings();
-					} else{
-						new Notice("No file selected");
-					}
-				});
-			});
 			new Setting(containerEl)
 			.setName("Show on bottom bar")
 			.addToggle((toggle) => {
@@ -233,11 +219,10 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 			.onClick(async (evt) => {
 				this.plugin.scripts.push({
 					name: "Unnamed",
-					path: "ls"
+					path: ""
 				})
 				await this.plugin.saveSettings();
 				this.createSettings();
-				
 			})
 			)
 		
