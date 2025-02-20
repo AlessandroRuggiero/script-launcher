@@ -46,7 +46,6 @@ Remember to enable [Commpunity Plugins](https://help.obsidian.md/Extending+Obsid
 ### From the Community plugins
 The best way to install the plugin is through the Obsidian community plugins, just search for `script launcher` and you will immediately find it.
 ### Build from source
-Folow this simple steps:
 First clone the repo, then in the repo's folder run
 ```bash
     make build_and_copy vault_path=path_to_your_vault
