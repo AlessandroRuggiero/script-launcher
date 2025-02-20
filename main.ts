@@ -8,6 +8,7 @@ interface Script {
 	icon?: string;
 	showOnBottomBar?:boolean;
 	showExitCode?:boolean;
+	runOnStartup?:boolean;
 }
 
 
@@ -20,6 +21,12 @@ export default class ScriptLauncher extends Plugin {
 		await this.loadSettings();
 		this.createIcons();
 		this.addSettingTab(new ScriptLauncherSettingTab(this.app, this));
+
+		for (const script of this.scripts) {
+			if (script.runOnStartup) {
+				this.runScript(script);
+			}
+		}
 
 		//adding the command to run any script at any time
 		this.addCommand({
@@ -163,6 +170,26 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 					await this.onSettingsChange()
 				})
 			})
+			new Setting(containerEl)
+			.setName("Run on startup")
+			.addToggle((toggle) => {
+				toggle.setValue(script.runOnStartup ?? false)
+				.onChange(async (v) => {
+					script.runOnStartup = v;
+					await this.onSettingsChange()
+				})
+			})
+			new Setting(containerEl)
+			.setName("Show exit code")
+			.addToggle((toggle) => {
+				toggle.setValue(script.showExitCode ?? false)
+				.onChange(async (v) => {
+					script.showExitCode = v;
+					await this.onSettingsChange()
+				})
+			}
+			)
+
 
 			new Setting(containerEl)
 			.setName("Icon")
