@@ -1,19 +1,16 @@
 # Script Launcher
-This is an Obsidian plugin that allows you to easily run script written in any language directly from the app
-## How to install it
-Go to the most recent tag and download the script-launcher zip, unzip it and extract the script-launcher folder (it should contain 3 files: main.js manifest.json and styles.css)
+This is an Obsidian plugin that allows you to easily run script written in any language directly from the app.
 
-Move this folder into `path_to_your_vault/.obsidian/plugins/` (if the plugins folder is not already there create it)
-
-Remember to enable [Commpunity Plugins](https://help.obsidian.md/Extending+Obsidian/Community+plugins) in the Obsidian settings
 ## How to use it
 ### Adding a new script 
 Go in the plugin settings and click the `+` icon
 You will have to fill in some information about the script you want to add:
 1. `Script name` → the name of the script you want to add (has no influnence on the script itself)
 2. `Script path` → absolute path to the script you want to launch (it can be anything: binary, executable, python script,shell script, bash script ecc...)
-3. `Show on bottom bar` → this is a checkbox, if selected the script will be shoen on the bottom bar and clicking it will launch it
-4. `Icon` → is the icon discplayed on the bottom bar, if left empty the name will be shown instead
+3. `Show on bottom bar` → this is a checkbox, if selected the script will be shown on the bottom bar and clicking it will launch it
+4. `Run on startup` → this is a checkbox, if selected the script will run automatically once Obsidian start up
+5. `Show exit code` → this is a checkbox, if selected the script show the exit code when terminated
+6. `Icon` → is the icon displayed on the bottom bar, if left empty the name will be shown instead
 
 ### Deleting a script 
 Click the `Delete` button on the script's settings you want to delete 
@@ -26,7 +23,7 @@ If the script does not show up as an icon go in the settings and select `Show on
 You can also run the script using the `Run script` Obsidian command, you will be prompted with a list of scripts with a searchbar, selecting a script will run it.
 
 
-The output of the script will be shown as notices in the Obsidian app
+The output of the script will be shown as notices in the Obsidian app.
 
 ## Examples 
 
@@ -44,25 +41,22 @@ The plugin passes the path to your vault as the first parameter to the script
 ```
 The second parameter passed to the script (`$2`) is the path to the currently open file, if there is no open file an empty string will be returned (`""`)
 
-## Advanced settings
-The scripts informations are saved in the `data.json` file under the `.obsidian/plugins` folder
-
-This is how it looks normally:
-```json
-[
-    {
-        "name": "Example",
-        "path": "/home/user/Documents/obsi/s.sh",
-        "showOnBottomBar": true,
-        "icon": "☁",
-    }
-]
+## How to install it
+Remember to enable [Commpunity Plugins](https://help.obsidian.md/Extending+Obsidian/Community+plugins) in the Obsidian settings.
+### From the Community plugins
+The best way to install the plugin is through the Obsidian community plugins, just search for `script launcher` and you will immediately find it.
+### Build from source
+Folow this simple steps:
+First clone the repo, then in the repo's folder run
+```bash
+    make build_and_copy vault_path=path_to_your_vault
 ```
-But you can manually add some options that are not shown in the user interface if needed:
-1. Showing exit code → add this filed to the json
-    ```json
-    "showExitCode": true
-    ```
-    The exit code will be shown as a Obsidian notice:
 
-    ![exit code notice](https://github.com/AlessandroRuggiero/script-launcher/blob/master/docs/images/exit-code-notice.png)
+This will build the plugin and move the files in the correct folder in your vault to allow you to test it
+
+
+### From a tag
+Go to the most recent tag and download the `script-launcher` zip, unzip it and extract the script-launcher folder (it should contain 3 files: main.js manifest.json and styles.css)
+
+Move this folder into `path_to_your_vault/.obsidian/plugins/` (if the plugins folder is not already there create it)
+
