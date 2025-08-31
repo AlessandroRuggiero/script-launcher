@@ -238,21 +238,6 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 			)
 
 	}
-	async openFilePicker(): Promise<string | null> {
-		return new Promise((resolve) => {
-			const input = document.createElement('input');
-			input.type = 'file';
-			input.onchange = (event: Event) => {
-				const target = event.target as HTMLInputElement;
-				if (target.files && target.files.length > 0) {
-					resolve(target.files[0].name);
-				} else {
-					resolve(null);
-				}
-			};
-			input.click();
-		});
-	}
 }
 
 class ScriptSelectionModal extends SuggestModal<Script> {
