@@ -1,6 +1,6 @@
 .PHONY: build build_and_copy
 
-vault_path ?=
+vault_path ?= "/home/alessandro/Documents/Testing"
 
 build:
 	@echo "Building..."

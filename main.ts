@@ -9,7 +9,6 @@ interface Script {
 	showOnBottomBar?: boolean;
 	showExitCode?: boolean;
 	runOnStartup?: boolean;
-	stopOnExit?: boolean;
 }
 
 
@@ -109,12 +108,10 @@ export default class ScriptLauncher extends Plugin {
 				new Notice(`child process exited with code ${code}`);
 			});
 		}
-		if (script.stopOnExit) {
-			this.runningScriptsToStop.set(pid, childProcess);
-			childProcess.on("exit", (code: any) => {
+		this.runningScriptsToStop.set(pid, childProcess);
+		childProcess.on("exit", (code: any) => {
 			this.runningScriptsToStop.delete(pid);
 		});
-		}
 	}
 
 	getVaultPath() {
@@ -204,15 +201,6 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 						})
 				}
 				)
-			new Setting(containerEl)
-				.setName("Stop on exit")
-				.addToggle((toggle) => {
-					toggle.setValue(script.stopOnExit ?? true)
-						.onChange(async (v) => {
-							script.stopOnExit = v;
-							await this.onSettingsChange()
-						})
-				})
 
 			new Setting(containerEl)
 				.setName("Icon")
