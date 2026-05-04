@@ -40,7 +40,7 @@ export default class ScriptLauncher extends Plugin {
 	}
 
 	onunload() {
-		for (const [pid, childProcess] of this.runningScriptsToStop) {
+		for (const [, childProcess] of this.runningScriptsToStop) {
 			childProcess.kill();
 		}
 	}
@@ -89,7 +89,7 @@ export default class ScriptLauncher extends Plugin {
 			new Notice(`Failed to start script: ${script.name}`);
 			return;
 		}
-		let pid = childProcess.pid;
+		const pid = childProcess.pid;
 		childProcess.stdout.on("data", (data: any) => {
 			console.log(`stdout: ${data}`);
 			new Notice(data);
@@ -100,7 +100,7 @@ export default class ScriptLauncher extends Plugin {
 			new Notice(data);
 		});
 
-		childProcess.on('error', (error: any) => {
+		childProcess.on('error', (error: Error) => {
 			new Notice(`error: ${error}`);
 		});
 		if (script.showExitCode) {
@@ -189,7 +189,7 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 								// We can try to retrieve it using Electron's webUtils
 								if (!filePath) {
 									try {
-										// @ts-ignore
+										// eslint-disable-next-line @typescript-eslint/no-var-requires
 										filePath = require('electron').webUtils.getPathForFile(file);
 									} catch (err) {
 										console.error(err);
