@@ -1,4 +1,4 @@
-import { App, Editor, FileSystemAdapter, MarkdownView, Notice, Plugin, PluginSettingTab, Setting, SuggestModal } from 'obsidian';
+import { App, Editor, FileSystemAdapter, MarkdownView, Notice, Plugin, PluginSettingTab, Setting, SuggestModal, setIcon } from 'obsidian';
 import { ChildProcess, spawn } from 'child_process';
 import * as fs from 'fs';
 
@@ -63,7 +63,15 @@ export default class ScriptLauncher extends Plugin {
 			if (!(this.verifiedScripts.has(script.path)) && !this.exists(script.path)) continue;
 			this.verifiedScripts.add(script.path);
 			const statusBarItemEl = this.addStatusBarItem();
-			statusBarItemEl.setText(script.icon ?? script.name);
+			if (script.icon) {
+				setIcon(statusBarItemEl, script.icon);
+				// setIcon does nothing if the icon name is invalid, so fall back to the name
+				if (statusBarItemEl.childElementCount === 0) {
+					statusBarItemEl.setText(script.name);
+				}
+			} else {
+				statusBarItemEl.setText(script.name);
+			}
 			statusBarItemEl.onClickEvent((_) => {
 				this.runScript(script);
 			})
