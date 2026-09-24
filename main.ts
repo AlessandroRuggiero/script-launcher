@@ -1,4 +1,4 @@
-import { App, Editor, FileSystemAdapter, MarkdownView, Notice, Plugin, PluginSettingTab, Setting, SuggestModal, setIcon } from 'obsidian';
+import { App, FileSystemAdapter, Notice, Plugin, PluginSettingTab, Setting, SuggestModal, setIcon } from 'obsidian';
 import { ChildProcess, spawn } from 'child_process';
 import * as fs from 'fs';
 
@@ -33,7 +33,7 @@ export default class ScriptLauncher extends Plugin {
 		this.addCommand({
 			id: 'run-script',
 			name: 'Run script',
-			editorCallback: (editor: Editor, view: MarkdownView) => {
+			editorCallback: () => {
 				new ScriptSelectionModal(this).open()
 			}
 		});
@@ -123,7 +123,7 @@ export default class ScriptLauncher extends Plugin {
 	}
 
 	getVaultPath() {
-		const adapter = app.vault.adapter;
+		const adapter = this.app.vault.adapter;
 		if (adapter instanceof FileSystemAdapter) {
 			return adapter.getBasePath();
 		}
@@ -131,7 +131,7 @@ export default class ScriptLauncher extends Plugin {
 	}
 
 	getFilePath() {
-		return app.workspace.getActiveFile()?.path;
+		return this.app.workspace.getActiveFile()?.path;
 	}
 }
 
