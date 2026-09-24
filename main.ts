@@ -98,26 +98,26 @@ export default class ScriptLauncher extends Plugin {
 			return;
 		}
 		const pid = childProcess.pid;
-		childProcess.stdout.on("data", (data: any) => {
+		childProcess.stdout.on("data", (data: Buffer) => {
 			console.log(`stdout: ${data}`);
-			new Notice(data);
+			new Notice(data.toString());
 		});
 
-		childProcess.stderr.on("data", (data: any) => {
+		childProcess.stderr.on("data", (data: Buffer) => {
 			console.log(`stderr: ${data}`);
-			new Notice(data);
+			new Notice(data.toString());
 		});
 
 		childProcess.on('error', (error: Error) => {
 			new Notice(`error: ${error}`);
 		});
 		if (script.showExitCode) {
-			childProcess.on("close", (code: any) => {
+			childProcess.on("close", (code: number | null) => {
 				new Notice(`child process exited with code ${code}`);
 			});
 		}
 		this.runningScriptsToStop.set(pid, childProcess);
-		childProcess.on("exit", (code: any) => {
+		childProcess.on("exit", () => {
 			this.runningScriptsToStop.delete(pid);
 		});
 	}
@@ -192,7 +192,7 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 						input.onchange = async (e: Event) => {
 							const file = (e.target as HTMLInputElement).files?.[0];
 							if (file) {
-								let filePath = (file as any).path;
+								let filePath = (file as File & { path?: string }).path;
 								// In some Electron setups (like Flatpak/Snap), .path is hidden for security
 								// We can try to retrieve it using Electron's webUtils
 								if (!filePath) {
