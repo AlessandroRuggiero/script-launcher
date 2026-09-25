@@ -10,7 +10,7 @@ You will have to fill in some information about the script you want to add:
 3. `Show on bottom bar` → this is a checkbox, if selected the script will be shown on the bottom bar and clicking it will launch it
 4. `Run on startup` → this is a checkbox, if selected the script will run automatically once Obsidian start up
 5. `Show exit code` → this is a checkbox, if selected the script show the exit code when terminated
-6. `Icon` → is the icon displayed on the bottom bar, if left empty the name will be shown instead
+6. `Icon` → is the icon displayed on the bottom bar, if left empty (or not a valid icon name) the name will be shown instead. Obsidian uses [Lucide](https://lucide.dev/icons) icons, so use any name from there (e.g. `terminal`)
 
 ### Deleting a script 
 Click the `Delete` button on the script's settings you want to delete 
