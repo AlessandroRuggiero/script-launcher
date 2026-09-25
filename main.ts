@@ -152,6 +152,19 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 		await this.plugin.saveSettings();
 	}
 
+	async pickFile(): Promise<string | undefined> {
+		try {
+			// eslint-disable-next-line @typescript-eslint/no-require-imports
+			const { dialog } = require('electron').remote;
+			const result = await dialog.showOpenDialog({ properties: ['openFile'] });
+			return result.canceled ? undefined : result.filePaths[0];
+		} catch (err) {
+			console.error(err);
+			new Notice("Could not open the file picker, please type the script path instead");
+			return undefined;
+		}
+	}
+
 	createSettings() {
 		const { containerEl } = this;
 
@@ -183,38 +196,13 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 					}))
 				.addButton(button => button
 					.setButtonText("Browse")
-					.onClick(() => {
-						const input = document.createElement('input');
-						input.type = 'file';
-						input.style.display = 'none';
-						document.body.appendChild(input);
-						
-						input.onchange = async (e: Event) => {
-							const file = (e.target as HTMLInputElement).files?.[0];
-							if (file) {
-								let filePath = (file as File & { path?: string }).path;
-								// In some Electron setups (like Flatpak/Snap), .path is hidden for security
-								// We can try to retrieve it using Electron's webUtils
-								if (!filePath) {
-									try {
-										// eslint-disable-next-line @typescript-eslint/no-require-imports
-										filePath = require('electron').webUtils.getPathForFile(file);
-									} catch (err) {
-										console.error(err);
-									}
-								}
-								
-								if (filePath) {
-									script.path = filePath;
-									await this.onSettingsChange();
-									this.createSettings();
-								} else {
-									new Notice(`Could not get absolute path for: ${file.name}`);
-								}
-							}
-							document.body.removeChild(input);
-						};
-						input.click();
+					.onClick(async () => {
+						const filePath = await this.pickFile();
+						if (filePath) {
+							script.path = filePath;
+							await this.onSettingsChange();
+							this.createSettings();
+						}
 					}));
 			new Setting(containerEl)
 				.setName("Show on bottom bar")
