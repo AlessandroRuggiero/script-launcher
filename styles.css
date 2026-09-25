@@ -1,3 +1,6 @@
-/*
-This plugin needs no styles for now
-*/
+/* Icon picker: show each icon next to its name */
+.script-launcher-icon-suggestion {
+	display: flex;
+	align-items: center;
+	gap: var(--size-4-2);
+}

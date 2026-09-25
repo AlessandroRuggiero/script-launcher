@@ -1,4 +1,4 @@
-import { App, FileSystemAdapter, Notice, Plugin, PluginSettingTab, Setting, SuggestModal, setIcon } from 'obsidian';
+import { App, FileSystemAdapter, FuzzyMatch, FuzzySuggestModal, Notice, Plugin, PluginSettingTab, Setting, SuggestModal, getIconIds, setIcon } from 'obsidian';
 import { ChildProcess, spawn } from 'child_process';
 import * as fs from 'fs';
 
@@ -241,7 +241,22 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 					.onChange(async (value) => {
 						script.icon = value;
 						await this.onSettingsChange()
-					}));
+					}))
+				.addExtraButton(button => {
+					button.setTooltip("Pick icon")
+						.onClick(() => {
+							new IconPickerModal(this.app, async (icon) => {
+								script.icon = icon;
+								await this.onSettingsChange();
+								this.createSettings();
+							}).open();
+						});
+					// preview the current icon, or show a search icon if it is empty or invalid
+					button.setIcon(script.icon || "search");
+					if (button.extraSettingsEl.childElementCount === 0) {
+						button.setIcon("search");
+					}
+				});
 			new Setting(containerEl)
 				.setName("Delete")
 				.addButton((button) => {
@@ -268,6 +283,34 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 				})
 			)
 
+	}
+}
+
+class IconPickerModal extends FuzzySuggestModal<string> {
+	onChoose: (icon: string) => void;
+
+	constructor(app: App, onChoose: (icon: string) => void) {
+		super(app);
+		this.onChoose = onChoose;
+		this.setPlaceholder("Search icons");
+	}
+
+	getItems(): string[] {
+		return getIconIds();
+	}
+
+	getItemText(icon: string): string {
+		return icon;
+	}
+
+	renderSuggestion(match: FuzzyMatch<string>, el: HTMLElement) {
+		el.addClass("script-launcher-icon-suggestion");
+		setIcon(el.createSpan(), match.item);
+		super.renderSuggestion(match, el.createSpan());
+	}
+
+	onChooseItem(icon: string) {
+		this.onChoose(icon);
 	}
 }
 
