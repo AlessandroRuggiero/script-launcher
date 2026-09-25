@@ -48,7 +48,7 @@ export default class ScriptLauncher extends Plugin {
 	exists(path: string): boolean {
 		try {
 			return fs.lstatSync(path).isFile();
-		} catch (e) {
+		} catch {
 			return false;
 		}
 	}
@@ -197,7 +197,7 @@ class ScriptLauncherSettingTab extends PluginSettingTab {
 								// We can try to retrieve it using Electron's webUtils
 								if (!filePath) {
 									try {
-										// eslint-disable-next-line @typescript-eslint/no-var-requires
+										// eslint-disable-next-line @typescript-eslint/no-require-imports
 										filePath = require('electron').webUtils.getPathForFile(file);
 									} catch (err) {
 										console.error(err);
